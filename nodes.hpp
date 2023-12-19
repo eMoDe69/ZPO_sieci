@@ -150,9 +150,9 @@ private:
 
 class Ramp : public PackageSender 
 {
-    private:
-    TimeOffset di_;
+private:
     ElementID id_;
+    TimeOffset di_;
     Time t_;
     std::optional<Package> bufor_ = std::nullopt;
 public:
