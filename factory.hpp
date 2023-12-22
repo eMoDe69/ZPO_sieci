@@ -2,7 +2,7 @@
 #define ZPO_SIECI_FACTORY_HPP
 #include "nodes.hpp"
 #include "types.hpp"
-
+#include <sstream>
 
 template <class Node>
 class NodeCollection{
@@ -67,9 +67,9 @@ public:
 
     bool is_consistent(){return true;}
 
-    void do_deliveries(){int i=1;}
-    void do_package_passing(){int i=1;}
-    void do_work(){int i=1;}
+    void do_deliveries();
+    void do_package_passing();
+    void do_work();
 
 
 private:
@@ -85,5 +85,23 @@ private:
 };
 Factory load_factory_structure(std::istream &is);
 void save_factory_structure(Factory &factory,std::ostream &os);
+
+enum class ElementType{
+    RAMP,
+    WORKER,
+    STOREHOUSE,
+    LINK
+};
+
+struct ParsedLineData{
+    ElementType element_type;
+    std::map<std::string,std::string> parameters;
+};
+
+enum class NodeTypes{
+    RAMP,
+    WORKER,
+    STORE
+};
 
 #endif //ZPO_SIECI_FACTORY_HPP
