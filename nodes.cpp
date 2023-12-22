@@ -33,27 +33,20 @@ void ReceiverPreferences::remove_receiver(IPackageReceiver *r)
     preferences_.erase(r);
 }
 
-IPackageReceiver *ReceiverPreferences::choose_receiver() 
-{
+IPackageReceiver *ReceiverPreferences::choose_receiver() {
     auto prob = pg_();
-
-    if (prob <= 1 && prob >= 0) 
-    {
+    if (prob >= 0 && prob <= 1) {
         double distribution = 0.0;
-        for (auto &rec: preferences_) 
-        {
+        for (auto &rec: preferences_) {
             distribution = distribution + rec.second;
-
-            if (distribution > 1 || distribution < 0) 
-            {
+            if (distribution < 0 || distribution > 1) {
                 return nullptr;
             }
-            else if (prob <= distribution) 
-            {
+            if (prob <= distribution) {
                 return rec.first;
             }
-            else return nullptr;
         }
+        return nullptr;
     }
     return nullptr;
 }
