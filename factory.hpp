@@ -19,9 +19,9 @@ public:
     void remove_by_id(ElementID id) {std::remove_if(kolekcja_.begin(),kolekcja_.end(),[&id](const auto& elem){return (elem.get_id()==id);});}
 
     iterator begin() {return kolekcja_.begin();}
-    const_iterator cbegin() {return kolekcja_.cbegin();}
+    const_iterator cbegin() const {return kolekcja_.cbegin();}
     iterator end() {return kolekcja_.end();}
-    const_iterator cend() {return kolekcja_.cend();}
+    const_iterator cend() const {return kolekcja_.cend();}
 
 private:
     container_t kolekcja_;
