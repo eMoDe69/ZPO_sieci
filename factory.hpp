@@ -4,6 +4,7 @@
 #include "types.hpp"
 #include <sstream>
 
+
 template <class Node>
 class NodeCollection{
 public:
@@ -39,9 +40,9 @@ public:
     NodeCollection<Ramp>::const_iterator find_ramp_by_id(ElementID id) const{return ramp_.find_by_id(id);}
 
     NodeCollection<Ramp>::iterator ramp_begin(){return ramp_.begin();}
-    NodeCollection<Ramp>::const_iterator ramp_cbegin(){return ramp_.cbegin();}
-    NodeCollection<Ramp>::iterator ramp_end(){return ramp_.end();}
-    NodeCollection<Ramp>::const_iterator ramp_cend(){return ramp_.cend();}
+    NodeCollection<Ramp>::const_iterator ramp_cbegin() const {return ramp_.cbegin();}
+    NodeCollection<Ramp>::iterator ramp_end() {return ramp_.end();}
+    NodeCollection<Ramp>::const_iterator ramp_cend()const {return ramp_.cend();}
 
 
     void add_storehouse(Storehouse&& storehouse){storehouse_.add(std::move(storehouse));}
@@ -50,20 +51,20 @@ public:
     NodeCollection<Storehouse>::const_iterator find_storehouse_by_id(ElementID id) const{return storehouse_.find_by_id(id);}
 
     NodeCollection<Storehouse>::iterator storehouse_begin(){return storehouse_.begin();}
-    NodeCollection<Storehouse>::const_iterator storehouse_cbegin(){return storehouse_.cbegin();}
+    NodeCollection<Storehouse>::const_iterator storehouse_cbegin() const {return storehouse_.cbegin();}
     NodeCollection<Storehouse>::iterator storehouse_end(){return storehouse_.end();}
-    NodeCollection<Storehouse>::const_iterator storehouse_cend(){return storehouse_.cend();}
+    NodeCollection<Storehouse>::const_iterator storehouse_cend() const {return storehouse_.cend();}
 
 
     void add_worker(Worker&& worker){worker_.add(std::move(worker));}
     void remove_worker(ElementID id){ remove_receiver(worker_,id);}
     NodeCollection<Worker>::iterator find_worker_by_id(ElementID id){return worker_.find_by_id(id);}
-    NodeCollection<Worker>::const_iterator find_worker_by_id(ElementID id) const{return worker_.find_by_id(id);}
+    NodeCollection<Worker>::const_iterator find_worker_by_id(ElementID id) const {return worker_.find_by_id(id);}
 
     NodeCollection<Worker>::iterator worker_begin() {return worker_.begin();}
-    NodeCollection<Worker>::const_iterator worker_cbegin(){return worker_.cbegin();}
+    NodeCollection<Worker>::const_iterator worker_cbegin()const {return worker_.cbegin();}
     NodeCollection<Worker>::iterator worker_end() {return worker_.end();}
-    NodeCollection<Worker>::const_iterator worker_cend(){return worker_.cend();}
+    NodeCollection<Worker>::const_iterator worker_cend() const {return worker_.cend();}
 
     bool is_consistent(){return true;}
 
@@ -103,5 +104,4 @@ enum class NodeTypes{
     WORKER,
     STORE
 };
-
 #endif //ZPO_SIECI_FACTORY_HPP

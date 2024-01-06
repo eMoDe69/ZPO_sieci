@@ -18,9 +18,6 @@ enum class ReceiverType {
 class IPackageReceiver {
 public:
     virtual void receive_package(Package &&p) = 0;
-#if (defined EXERCISE_ID && EXERCISE_ID != EXERCISE_ID_NODES)
-    virtual ReceiverType get_receiver_type() const = 0;
-#endif
 
 
     virtual ElementID get_id() const = 0;
@@ -34,6 +31,12 @@ public:
     virtual IPackageStockpile::const_iterator end() const = 0;
 
     virtual ~IPackageReceiver() = default;
+
+    virtual ReceiverType get_receiver_type() const = 0;
+
+#if (defined EXERCISE_ID && EXERCISE_ID != EXERCISE_ID_NODES)
+    virtual ReceiverType get_receiver_type() const = 0;
+#endif
 };
 
 class ReceiverPreferences {
@@ -47,9 +50,9 @@ public:
 
     const_iterator cend() const { return preferences_.cend(); }
 
-    const_iterator begin() const { return preferences_.cbegin(); }
+    const_iterator begin() const { return preferences_.begin(); }
 
-    const_iterator end() const { return preferences_.cend(); }
+    const_iterator end() const { return preferences_.end(); }
 
     void add_receiver(IPackageReceiver *r);
 
@@ -83,6 +86,8 @@ private:
     std::optional<Package> bufor_ = std::nullopt;
 };
 
+
+
 class Storehouse : public IPackageReceiver {
 public:
     Storehouse(ElementID id, std::unique_ptr<IPackageStockpile> d = std::make_unique<PackageQueue>(PackageQueueType::FIFO)) : id_(id), d_(std::move(d)) {}
@@ -99,14 +104,14 @@ public:
 
     IPackageStockpile::const_iterator end() const override { return d_->end(); }
 
-#if (defined EXERCISE_ID && EXERCISE_ID != EXERCISE_ID_NODES)
     ReceiverType get_receiver_type() const override { return ReceiverType::STOREHOUSE; }
-#endif
 
 private:
     ElementID id_;
     std::unique_ptr<IPackageStockpile> d_;
 };
+
+
 
 class Worker : public IPackageReceiver, public PackageSender {
 public:
@@ -132,10 +137,7 @@ public:
 
     IPackageStockpile::const_iterator end() const override { return q_->end(); }
 
-#if (defined EXERCISE_ID && EXERCISE_ID != EXERCISE_ID_NODES)
     ReceiverType get_receiver_type() const override { return ReceiverType::WORKER; }
-#endif
-
 private:
     ElementID id_;
     TimeOffset pd_;
@@ -143,6 +145,8 @@ private:
     std::unique_ptr<IPackageQueue> q_;
     std::optional<Package> bufor_ = std::nullopt;
 };
+
+
 
 class Ramp : public PackageSender {
 public:
@@ -160,6 +164,7 @@ private:
     Time t_;
     std::optional<Package> bufor_ = std::nullopt;
 };
+
 
 
 #endif //NETSIM_NODES_HPP

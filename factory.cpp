@@ -2,15 +2,17 @@
 
 void Factory::remove_receiver(NodeCollection<Ramp> &collection, ElementID id) {
     collection.remove_by_id(id);
-};
+}
 
 void Factory::remove_receiver(NodeCollection<Worker> &collection, ElementID id) {
+    //(ramp_.find_by_id(id)->receiver_preferences_).remove_receiver(&(*(worker_.find_by_id(id))));
     collection.remove_by_id(id);
-};
+
+}
 
 void Factory::remove_receiver(NodeCollection<Storehouse> &collection, ElementID id) {
     collection.remove_by_id(id);
-};
+}
 
 void Factory::do_deliveries() {
     int i=0;
